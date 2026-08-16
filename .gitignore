@@ -9,3 +9,7 @@ nohup.out
 # package-lock.json の方なので、pnpm 側のロックは追跡しない
 # (両方を追跡すると、片方だけ更新されて静かにズレる)
 pnpm-lock.yaml
+
+# 書き出した PDF / PNG。中身は slides.md から作り直せる
+slides-export.pdf
+slides-export/

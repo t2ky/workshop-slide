@@ -6,13 +6,15 @@
     "dev": "slidev --open",
     "serve": "slidev --port 3030",
     "build": "slidev build",
-    "export": "slidev export",
+    "export": "slidev export --executable-path \"${CHROME_PATH:-/usr/bin/google-chrome}\"",
     "check": "node scripts/check-overflow.mjs",
-    "shots": "node scripts/check-overflow.mjs --save"
+    "shots": "node scripts/check-overflow.mjs --save",
+    "export:png": "slidev export --format png --executable-path \"${CHROME_PATH:-/usr/bin/google-chrome}\""
   },
   "devDependencies": {
     "@slidev/cli": "^52.19.0",
     "@slidev/theme-default": "^0.25.0",
+    "playwright-chromium": "^1.62.1",
     "puppeteer-core": "^25.7.0",
     "vue": "^3.5.24"
   }

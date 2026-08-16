@@ -114,6 +114,23 @@ workshop-slide/
 └── shots/                    npm run shots の出力 (git 管理外)
 ```
 
+### PDF に書き出す
+
+```bash
+npm run export        # slides-export.pdf (50ページ, 16:9, テキストは選択できる)
+npm run export:png    # 1枚ずつ PNG が要るとき
+```
+
+Slidev の export は Playwright 前提だが、**ブラウザは落としてこない。**
+`playwright-chromium` はドライバだけ入れ (`PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1`)、
+`--executable-path` でシステムの `google-chrome` を使わせている。
+`npm run check` と同じ理由で、会場でブラウザのダウンロードを走らせないため。
+
+`CHROME_PATH` を渡せば別のブラウザに向けられる。
+
+**PDF は git に入れない。** `slides.md` から作り直せるので、
+書き出したものを配るときだけ作ること。
+
 ### スライドを大きく書き換えたら、開発サーバを畳んでから確認する
 
 Slidev の HMR は**スライドの枚数が大きく変わる書き換えに追従しきれない**。
