@@ -4,3 +4,8 @@ shots/
 .slidev/
 *.log
 nohup.out
+
+# 開発機は npm、srgpu は pnpm で入れている。バージョンを固定する正本は
+# package-lock.json の方なので、pnpm 側のロックは追跡しない
+# (両方を追跡すると、片方だけ更新されて静かにズレる)
+pnpm-lock.yaml
