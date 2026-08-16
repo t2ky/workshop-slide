@@ -31,10 +31,11 @@ const only = args.find((a) => /^\d+$/.test(a));
 /** 既に誰かが立てていればそれを使い、なければ自分で立てて後で畳む。 */
 async function ensureServer() {
   if (await alive()) return null;
-  const proc = spawn("npx", ["slidev", "--port", String(PORT)], {
-    cwd: new URL("..", import.meta.url).pathname,
-    stdio: "ignore",
-  });
+  // npx ではなく node_modules/.bin を直に叩く。srgpu 側は pnpm で入れていて
+  // npm/npx が無いため、npx に頼ると「node はあるのに動かない」になる
+  const root = new URL("..", import.meta.url).pathname;
+  const bin = `${root}node_modules/.bin/slidev`;
+  const proc = spawn(bin, ["--port", String(PORT)], { cwd: root, stdio: "ignore" });
   for (let i = 0; i < 120; i++) {
     await new Promise((r) => setTimeout(r, 500));
     if (await alive()) return proc;
