@@ -1,0 +1,121 @@
+/* 全スライド共通の見た目。
+ *
+ * フォントは Google Fonts を取りに行かず、OS に入っている Noto Sans CJK JP を
+ * 使う。会場の回線が読めないので、ネットワークに依存する要素を持ち込まない。
+ * (fc-list :lang=ja で入っていることを確認済み)
+ */
+
+:root {
+  --wc-teal: #0f8a91;
+  --wc-teal-dim: #0f8a9122;
+  --wc-ink: #1b2426;
+  --wc-dim: #6b7a7d;
+  --wc-warn: #c96f4a;
+}
+
+html.dark {
+  --wc-ink: #eef4f4;
+  --wc-dim: #93a3a6;
+}
+
+.slidev-layout {
+  font-family: "Noto Sans CJK JP", "Noto Sans JP", "Hiragino Sans", sans-serif;
+  font-feature-settings: "palt" 1; /* 日本語の約物を詰める。行が詰まって収まりが良くなる */
+  color: var(--wc-ink);
+}
+
+.slidev-layout h1 { color: var(--wc-teal); font-weight: 700; letter-spacing: .01em; }
+.slidev-layout h2 { font-weight: 700; letter-spacing: .01em; }
+
+/* 本文は「読ませる」ではなく「見せる」。既定より大きく、行間を広く取る。
+   小さくして詰めるくらいなら、スライドを分けること。 */
+.slidev-layout li { line-height: 1.85; margin: .25em 0; }
+.slidev-layout p  { line-height: 1.85; }
+
+/* 章扉 */
+.slidev-layout.section h1 { font-size: 2.6rem; }
+
+/* 覚えて帰ってほしい一文。1スライドに1つまで */
+.punch {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.7;
+  border-left: 6px solid var(--wc-teal);
+  padding: .2em 0 .2em .8em;
+}
+
+/* 補足。読めなくてもいい情報はここに落とす */
+.note { color: var(--wc-dim); font-size: .82em; line-height: 1.7; }
+
+/* 用語や部位名 */
+.chip {
+  display: inline-block;
+  background: var(--wc-teal-dim);
+  color: var(--wc-teal);
+  border-radius: 999px;
+  padding: .12em .8em;
+  font-size: .85em;
+  font-weight: 700;
+}
+
+.slidev-layout table { font-size: .9em; }
+.slidev-layout th { color: var(--wc-teal); }
+
+/* コードはスライドでは「読ませる」より「形を見せる」。行数を絞ること */
+.slidev-layout pre { line-height: 1.6 !important; }
+
+/* --- 引用の出典。図やデータを載せたら必ずこれを添える -------------------- */
+.cite {
+  color: var(--wc-dim);
+  font-size: .62em;
+  line-height: 1.6;
+  margin-top: .6em;
+}
+.cite a { color: inherit; text-decoration: underline; }
+
+/* --- 数字を主役にするとき (グラフにするほどでもない1つの数) --------------
+   dataviz の指針どおり、1画面に hero は1つだけ。等幅数字は使わない
+   (表示サイズでは字間が緩んで見えるため) */
+.hero {
+  font-size: 5.2rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--wc-warn);
+}
+.hero-sub { font-size: 1.05rem; font-weight: 700; margin-top: .4em; }
+
+.stat { font-size: 2.2rem; font-weight: 700; line-height: 1.1; color: var(--wc-teal); }
+
+/* --- 画面の模式図。実機のスクリーンショットではないので、枠で「図」と分かる形にする */
+.screen {
+  border: 2px solid var(--wc-teal);
+  border-radius: 14px;
+  background: #f6fbfb;
+  aspect-ratio: 16 / 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  padding: 1rem;
+  text-align: center;
+}
+html.dark .screen { background: #12201f; }
+.screen .cap { font-weight: 700; }
+
+/* --- 箱と矢印でパイプラインを描くとき ---------------------------------- */
+.box {
+  border: 1.5px solid var(--wc-teal);
+  border-radius: 10px;
+  padding: .5em .8em;
+  text-align: center;
+  font-size: .9em;
+  line-height: 1.45;
+}
+.box-dim { border-color: #c2cdcf; color: var(--wc-dim); }
+.arrow { color: var(--wc-teal); font-size: 1.4em; align-self: center; }
+
+/* --- 2列で「今できている / これからやる」を並べるとき -------------------- */
+.panel { border-radius: 14px; padding: 1.1rem 1.3rem; }
+.panel-done { background: var(--wc-teal-dim); }
+.panel-next { background: #c96f4a1f; }

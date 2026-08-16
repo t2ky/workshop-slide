@@ -1,0 +1,19 @@
+{
+  "name": "workshop-slide",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "slidev --open",
+    "serve": "slidev --port 3030",
+    "build": "slidev build",
+    "export": "slidev export",
+    "check": "node scripts/check-overflow.mjs",
+    "shots": "node scripts/check-overflow.mjs --save"
+  },
+  "devDependencies": {
+    "@slidev/cli": "^52.19.0",
+    "@slidev/theme-default": "^0.25.0",
+    "puppeteer-core": "^25.7.0",
+    "vue": "^3.5.24"
+  }
+}

@@ -1,0 +1,6 @@
+node_modules/
+dist/
+shots/
+.slidev/
+*.log
+nohup.out
