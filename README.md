@@ -103,6 +103,28 @@ pnpm export:png       # 1枚ずつ PNG が要るとき（slides-export/ に出�
 pnpm build            # dist/ に出力
 ```
 
+---
+
+## 公開先
+
+**https://t2ky.github.io/workshop-slide/**
+
+`main` に push すると [GitHub Actions](.github/workflows/deploy.yml) がビルドして
+GitHub Pages に出します。**手で公開する操作は要りません。**
+
+- 依存の取得は CI では `npm ci` です。`pnpm-lock.yaml` は git 管理外で CI から
+  見えないため、追跡している `package-lock.json` を正本にしています
+- Pages はリポジトリ名のサブパスに出るので、CI では `--base /workshop-slide/`
+  を付けてビルドしています。ローカルの `pnpm build` には不要です
+- 公開ページでも `/overview` や発表者モードはそのまま使えます
+
+失敗したときは Actions のログを見てください。
+
+```bash
+gh run list --workflow deploy.yml
+gh run watch
+```
+
 ### 大きく書き換えたあと
 
 Slidev の HMR は**ページ枚数が大きく変わる書き換えに追従しきれません。**
