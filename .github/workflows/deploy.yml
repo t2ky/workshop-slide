@@ -1,0 +1,59 @@
+# main に push するたびにスライドをビルドして GitHub Pages に出す。
+#
+# 依存の取得は pnpm ではなく npm ci。pnpm-lock.yaml は .gitignore に入れて
+# いて CI から見えないため、追跡している package-lock.json を正本にする。
+name: Deploy slides to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: # 手動でも流せるようにしておく
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 公開されるのは常に最新の main 1つだけでいい。走行中の古いものは打ち切る
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install
+        # playwright-chromium の postinstall は「バンドル版ブラウザを落とす」処理。
+        # ビルドには要らないので走らせない (ローカルと同じ方針)
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
+        run: npm ci
+
+      - name: Build
+        # Pages は https://<user>.github.io/<repo>/ の下に出るので、
+        # アセットの参照先をリポジトリ名のサブパスに寄せる
+        run: npm run build -- --base /${{ github.event.repository.name }}/
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
